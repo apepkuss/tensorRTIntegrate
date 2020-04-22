@@ -4,24 +4,24 @@ CC := g++
 CUCC := nvcc
 SRCDIR := src
 OBJDIR := objs
-LEAN := /datav/newbb/lean
+# LEAN := /datav/newbb/lean
 #BINDIR := $(LEAN)/tensorRTIntegrate
 BINDIR := workspace
 
 TENSORRT_NAME := TensorRT-7.0.0.11
 #TENSORRT_NAME := TensorRT-6.0.1.8-cuda10.2-cudnn7.6
-CFLAGS := -std=c++11 -fPIC -m64 -g -O3 -fopenmp -w -DONNX_ML -DNDEBUG 
-CUFLAGS := -std=c++11 -m64 -Xcompiler -fPIC -g -O3 -w -gencode=arch=compute_75,code=sm_75 -gencode=arch=compute_61,code=sm_61
-INC_OPENCV := $(LEAN)/opencv4.2.0/include/opencv4
+CFLAGS := -std=c++11 -fPIC -g -O3 -fopenmp -w -DONNX_ML -DNDEBUG 
+CUFLAGS := -std=c++11 -m64 -Xcompiler -fPIC -g -O3 -w -gencode=arch=compute_75,code=sm_75 -gencode=arch=compute_61,code=sm_61 -gencode=arch=compute_53,code=sm_53
+INC_OPENCV := /usr/include/opencv4/
 INC_LOCAL := ./src ./src/builder ./src/common ./src/infer ./src/plugin ./src/plugin/plugins
-INC_SYS := /usr/local/protobuf/include
-INC_CUDA := $(LEAN)/cuda10.2/include $(LEAN)/$(TENSORRT_NAME)/include $(LEAN)/cudnn7.6.5.32-cuda10.2
+INC_SYS := /usr/local/include/ /usr/src/linux-headers-4.9.140-tegra-ubuntu18.04_aarch64/kernel-4.9/arch/arm64/include/
+INC_CUDA := /usr/local/cuda-10.0/include /usr/include/aarch64-linux-gnu/
 INCS := $(INC_SYS) $(INC_OPENCV) $(INC_LOCAL) $(INC_CUDA)
 INCS := $(foreach inc, $(INCS), -I$(inc))
 
-LIB_CUDA := $(LEAN)/cuda10.2/lib $(LEAN)/$(TENSORRT_NAME)/lib $(LEAN)/cudnn7.6.5.32-cuda10.2
-LIB_SYS := /usr/local/protobuf/lib
-LIB_OPENCV := $(LEAN)/opencv4.2.0/lib 
+LIB_CUDA := /usr/local/cuda-10.0/lib64 /usr/lib/python3.6/dist-packages/tensorrt /usr/include/aarch64-linux-gnu/ /usr/lib/aarch64-linux-gnu/tegra
+LIB_SYS := /usr/local/lib
+LIB_OPENCV := /usr/lib/aarch64-linux-gnu/ 
 LIBS := $(LIB_SYS) $(LIB_CUDA) $(LIB_OPENCV)
 LIBS := $(foreach lib, $(LIBS),-L$(lib))
 

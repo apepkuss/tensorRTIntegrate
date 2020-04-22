@@ -19,7 +19,8 @@
 #endif
 
 #if defined(U_OS_LINUX)
-#	include <sys/io.h>
+// #	include <sys/io.h>
+# include <asm/io.h>
 #	include <dirent.h>
 #	include <sys/types.h>
 #	include <sys/stat.h>
